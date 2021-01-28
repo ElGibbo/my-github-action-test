@@ -9,7 +9,7 @@ jobs:
       id: hello
       uses: ElGibbo/my-github-action-test@v1.0.9
       with:
-        who-to-greet: 'ElGibbo'
+        who-to-greet: 'Itsa me Mario'
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.time }}"
