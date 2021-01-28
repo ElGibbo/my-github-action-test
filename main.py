@@ -1,7 +1,7 @@
 import os
 
 
-name = os.getenv("INPUT_WHO_TO_GREET")
+name = os.getenv("INPUT_WHOTOGREET")
 
 print("This has printed from a python script")
 print(f"the input name was {name}")
