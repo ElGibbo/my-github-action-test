@@ -1,6 +1,10 @@
 # action.yaml
 name: 'An action'
 description: 'What have you done today'
+inputs:
+  slackUrl:
+    description: 'Where to send Slack message'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'

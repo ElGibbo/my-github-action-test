@@ -3,18 +3,22 @@ import requests
 import datetime
 
 
+def parse_slack_message(message):
+    message_to_return = "Today, you have:"
+    for obj_ in message:
+        message_to_return = message_to_return + f"\n- Performed {obj_} {message[obj_]} time(s)"
+    return message_to_return
+
+
 github_action = os.getenv("GITHUB_EVENT_NAME", "five")
 github_user = os.getenv("GITHUB_ACTOR", "four")
+slack_webhook_url = os.getenv("INPUT_SLACKURL")
 
-slack_webhook_url = "https://hooks.slack.com/services/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"
 url = "https://nswxbizgc7.execute-api.eu-west-1.amazonaws.com/prod/actions/"
-
 request_body = {"userName": github_user, "triggeredBy": github_action}
-
 response = requests.post(url=url, json=request_body)
 
 slack_message = {}
-
 if response.status_code == 200:
     all_actions = requests.get(url=url + github_user).json()
     todays_date = str(datetime.date.today())
@@ -25,14 +29,6 @@ if response.status_code == 200:
                 slack_message[triggered_by] = slack_message[triggered_by] + 1
             else:
                 slack_message[triggered_by] = 1
-
-
-def parse_slack_message(message):
-    message_to_return = "Today, you have:"
-    for obj_ in message:
-        message_to_return = message_to_return + f"\n- Performed {obj_} {message[obj_]} time(s)"
-    return message_to_return
-
 
 message_to_send = parse_slack_message(slack_message)
 slack_obj = {'text': message_to_send}
